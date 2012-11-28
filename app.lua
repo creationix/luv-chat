@@ -1,6 +1,8 @@
 local p = require('utils').prettyPrint
-local app = require('moonslice')()
 local await = require('fiber').await
+
+local app = require('moonslice')()
+app.log = true
 
 -- A custom endpoint
 app:get("^/greet$", function (req, res)
@@ -19,10 +21,7 @@ app:websocket("^/socket$", function (headers, socket)
 end)
 
 -- Serve a folder as static resources
-app:static("public")
+app:static("public", {index="index.html"})
 
-app.log = true
-
-p(app)
 
 return app
